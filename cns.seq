@@ -5,7 +5,7 @@
 CNS->CustReg: Auth user
 CustReg-->CNS: Authenticed
 
-== Deferred Delivery ==
+== Deferred Delivery Label Creation==
 
 opt Edit Sender Details
     CNS->VerifyApi: "<font color=red><b>Verify Address?"
@@ -26,5 +26,47 @@ end
 CNS->CNS: Select Ship Date & Service Type
 
 CNS->CNS: Confirm Ship Date, Service & Package Type
+
+CNS->CNS: Add to Cart from Single Label Creation Flow
+
+opt Incomplete Data
+    CNS->CNS: Update Label Manager
+    CNS->CNS: Add to Cart from Label Manager
+end
+
+CNS->CNS: Update Label Cart
+
+== Purchase Label ==
+
+CNS->LoyaltyAPI: Get Loyalty Points 
+LoyaltyAPI->CNS: Retrieve Loyalty Points
+
+alt Global Payment
+    CNS->GlobalPayment:  <font color=red><b>GL Code?
+    GlobalPayment->CNS: Payment Received
+else EPS
+    CNS->EPS:  <font color=red><b>GL Code?
+    EPS->CNS: Payment Received
+end
+
+== Retrieve Inbound Label ==
+
+CNS->EMAS: Request Label
+EMAS->CNS: Return Label
+
+== Review Label ==
+
+CNS->CNS: View Shipping History <font color=red><b>(Retrieve from API?)
+CNS->CNS: View Label Details
+
+== Finish Transation ==
+
+CNS->CNSB: Update CNSB Product Table
+CNS->SEAM: <font color=red><b>When is SEAM sent CSV file?
+CNS->LoyaltyAPI: Send ineligible transations from ECNS
+
+opt Request Refund
+    CNS->UNKNOWN 
+end
 
 @enduml
