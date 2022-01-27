@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+cat ./lib/txt
+
+read -p "Press [Enter]"
+
+./lib/init
+
+cat ./lib/etc
+
+java -jar ./lib/plantuml.jar -version
+
+java -jar ./lib/plantuml.jar ./cns.seq

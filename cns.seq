@@ -1,0 +1,10 @@
+@startuml
+
+== Authentication ==
+
+CNS->CustReg: Auth user
+CustReg-->CNS: Authenticed
+
+
+
+@enduml
