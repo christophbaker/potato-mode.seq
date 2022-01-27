@@ -5,6 +5,26 @@
 CNS->CustReg: Auth user
 CustReg-->CNS: Authenticed
 
+== Deferred Delivery ==
 
+opt Edit Sender Details
+    CNS->VerifyApi: "<font color=red><b>Verify Address?"
+end
+
+CNS->CNS: Select Location
+
+CNS->LocationAPI: "<font color=red><b>Get Locations?"
+
+CNS->CNS: Enter Package Details
+
+CNS->CNS: Import Product Details as CSV File
+
+opt Save Label
+    CNS->Storage: "<font color=red><b>Storage Location?"
+end
+
+CNS->CNS: Select Ship Date & Service Type
+
+CNS->CNS: Confirm Ship Date, Service & Package Type
 
 @enduml
